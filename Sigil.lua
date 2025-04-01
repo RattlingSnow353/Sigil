@@ -1001,7 +1001,9 @@ for i = 1, #cursuit do
                     if G.GAME.selected_back.name == ("b_sshs_k"..current_deck[1]) then
                         for u = 2, #current_deck do
                             if self.key == ("sshs_"..cleanSuitName(current_deck[u], "_").."s") then
-                                args.initial_deck = true
+                                if args ~= nil then
+                                    args.initial_deck = true
+                                end
                                 return true
                             end
                         end
@@ -1009,7 +1011,9 @@ for i = 1, #cursuit do
                     end
                 end
             end
-            args.initial_deck = false
+            if args ~= nil then
+                args.initial_deck = false
+            end
             return false
         end
     }
@@ -1322,7 +1326,7 @@ SMODS.Joker {
         return { vars = { '' .. (G.GAME and G.GAME.probabilities.normal or 1), card.ability.extra.odds } }
     end,
     calculate = function(self, card, context)
-        if context.cardarea == G.play and not context.repetition then 
+        if context.cardarea == G.play and not context.repetition and context.individual then 
             for k, v in ipairs(context.full_hand) do 
                 local card = v
                 local suit = string.sub(card.base.suit, 1, 1)
